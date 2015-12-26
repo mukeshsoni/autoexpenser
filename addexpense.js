@@ -11,7 +11,9 @@ var {
   View,
   TouchableHighlight,
   TouchableOpacity,
-  NativeModules
+  NativeModules,
+  ToolbarAndroid,
+  Dimensions,
 } = React;
 
 var PropTypes = React.PropTypes;
@@ -68,9 +70,33 @@ var AddExpense = React.createClass({
   handleDatePickerClick: function () {
     NativeModules.DateAndroid.showDatepicker(function() {}, this.handleDateChange);
   },
+  handleActionSelected(actionIndex) {
+    console.log('action index: ', actionIndex);
+  },
   render: function() {
     return (
         <View style={styles.container}>
+          <View style={styles.row}>
+          <ToolbarAndroid
+      logo={require('./img/ic_launcher_mcube.png')}
+      title="mcube"
+      style={styles.toolbar}
+      actions={[
+        {
+          title: 'Delete',
+          icon: require('./img/ic_menu_delete.png'),
+          show: 'always',
+          showWithText: true
+        },
+        {
+          title: 'Save',
+          icon: require('./img/ic_action_save_expense.png'),
+          show: 'always',
+          showWithText: true
+        }
+      ]}
+      onActionSelected={this.handleActionSelected} />
+  </View>
             <View style={styles.row}>
                 <Text style={styles.label}>Date</Text>
                 <Text style={{fontSize: 20}}>{this.formatDate(this.state.date)}</Text>
@@ -116,10 +142,6 @@ var AddExpense = React.createClass({
                 <Text style={styles.label}>Sms</Text>
                 <Text>{this.props.sms}</Text>
             </View>
-              <TouchableHighlight
-                onPress={this.handleSaveClick}>
-                  <Text>Save</Text>
-              </TouchableHighlight>
         </View>
     );
   }
@@ -129,8 +151,9 @@ var styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F5FCFF',
-        alignItems: 'flex-start',
-        alignSelf: 'flex-start'
+        alignItems: 'stretch',
+        alignSelf: 'stretch',
+        padding: 10
     },
     row: {
         flex: 1,
@@ -138,6 +161,11 @@ var styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'stretch',
         justifyContent: 'space-between'
+    },
+    toolbar: {
+      backgroundColor: '#e9eaed',
+      width: Dimensions.get('window').width - 30,
+      height: 56,
     },
     label: {
       fontSize: 30
