@@ -11,8 +11,6 @@ var {
   TouchableHighlight,
   TouchableOpacity,
   NativeModules,
-  ToolbarAndroid,
-  Dimensions,
 } = React;
 
 var PropTypes = React.PropTypes;
@@ -20,6 +18,10 @@ const BANKS = ['ICICI', 'HDFC'];
 const CATEGORIES = ['Jewellery', 'Grocery'];
 
 var AddExpense = React.createClass({
+  propTypes: {
+    sms: React.PropTypes.string,
+    onChange: React.PropTypes.func
+  },
   getInitialState: function() {
     return {
       date: new Date(),
@@ -54,12 +56,6 @@ var AddExpense = React.createClass({
   handleNoteChange(note) {
     this.setState({note});
   },
-  handleSaveClick() {
-
-  },
-  handleCancelClick(){
-
-  },
   handleDateChange(year, month, day, forthfellow) {
     console.log('forth arg: ', forthfellow);
     this.setState({
@@ -69,79 +65,55 @@ var AddExpense = React.createClass({
   handleDatePickerClick: function () {
     NativeModules.DateAndroid.showDatepicker(function() {}, this.handleDateChange);
   },
-  handleActionSelected(actionIndex) {
-    console.log('action index: ', actionIndex);
-  },
   render: function() {
     return (
         <View style={styles.container}>
           <View style={styles.row}>
-          <ToolbarAndroid
-            logo={require('../img/ic_launcher_mcube.png')}
-            title="mcube"
-            style={styles.toolbar}
-            actions={[
-              {
-                title: 'Delete',
-                icon: require('../img/ic_menu_delete.png'),
-                show: 'always',
-                showWithText: true
-              },
-              {
-                title: 'Save',
-                icon: require('../img/ic_action_save_expense.png'),
-                show: 'always',
-                showWithText: true
-              }
-            ]}
-            onActionSelected={this.handleActionSelected} />
+              <Text style={styles.label}>Date</Text>
+              <Text style={{fontSize: 20}}>{this.formatDate(this.state.date)}</Text>
+              <TouchableOpacity onPress={this.handleDatePickerClick}>
+                <Text style={styles.instructions}>
+                  Pick Date
+                </Text>
+              </TouchableOpacity>
           </View>
-            <View style={styles.row}>
-                <Text style={styles.label}>Date</Text>
-                <Text style={{fontSize: 20}}>{this.formatDate(this.state.date)}</Text>
-                <TouchableOpacity onPress={this.handleDatePickerClick}>
-                  <Text style={styles.instructions}>
-                    Pick Date
-                  </Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.row}>
-                <Text style={styles.label}>Bank</Text>
-                <Dropdown
-                  style={styles.dropdown}
-                  values={this.props.banks}
-                  selected={this.state.selectedBank} onChange={this.handleBankChange} />
-            </View>
-            <View style={styles.row}>
-                <Text style={styles.label}>Amount</Text>
-                <TextInput
-                  style={styles.textInput}
-                  onChangeText={this.handleAmountChange}
-                  value={this.state.amount + ''}
-                  keyboardType='numbers-and-punctuation'
-                  />
-            </View>
-            <View style={styles.row}>
-                <Text style={styles.label}>Category</Text>
-                <Dropdown
-                  style={styles.dropdown}
-                  values={this.props.categories}
-                  selected={this.state.selectedCategory} onChange={this.handleCategoryChange} />
-            </View>
-            <View style={styles.row}>
-                <Text style={styles.label}>Notes</Text>
-                <TextInput
-                  style={styles.textInput}
-                  multiline={true}
-                  onChangeText={this.handleNoteChange}
-                  value={this.state.note}
-                  />
-            </View>
-            <View style={styles.row}>
-                <Text style={styles.label}>Sms</Text>
-                <Text>{this.props.sms}</Text>
-            </View>
-        </View>
+          <View style={styles.row}>
+              <Text style={styles.label}>Bank</Text>
+              <Dropdown
+                style={styles.dropdown}
+                values={this.props.banks}
+                selected={this.state.selectedBank} onChange={this.handleBankChange} />
+          </View>
+          <View style={styles.row}>
+              <Text style={styles.label}>Amount</Text>
+              <TextInput
+                style={styles.textInput}
+                onChangeText={this.handleAmountChange}
+                value={this.state.amount + ''}
+                keyboardType='numbers-and-punctuation'
+                />
+          </View>
+          <View style={styles.row}>
+              <Text style={styles.label}>Category</Text>
+              <Dropdown
+                style={styles.dropdown}
+                values={this.props.categories}
+                selected={this.state.selectedCategory} onChange={this.handleCategoryChange} />
+          </View>
+          <View style={styles.row}>
+              <Text style={styles.label}>Notes</Text>
+              <TextInput
+                style={styles.textInput}
+                multiline={true}
+                onChangeText={this.handleNoteChange}
+                value={this.state.note}
+                />
+          </View>
+          <View style={styles.row}>
+              <Text style={styles.label}>Sms</Text>
+              <Text>{this.props.sms}</Text>
+          </View>
+      </View>
     );
   }
 });
@@ -160,11 +132,6 @@ var styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'stretch',
         justifyContent: 'space-between'
-    },
-    toolbar: {
-      backgroundColor: '#e9eaed',
-      width: Dimensions.get('window').width - 30,
-      height: 56,
     },
     label: {
       fontSize: 30
