@@ -9,6 +9,7 @@ var {
   ListView,
   Text,
   View,
+  TouchableNativeFeedback
 } = React;
 
 var PropTypes = React.PropTypes;
@@ -33,11 +34,22 @@ var Summary = React.createClass({
       selectedTimePeriod: 0
     };
   },
-  renderRow(rowData) {
+  handleRowPress(arg1) {
+    console.log('row pressed: ', arg1);
+  },
+  renderRow(rowData, sectionID, rowID, highlightRowFunc) {
     return (
-      <View style={styles.row}>
-        <Text>{rowData.groupName}</Text>
-        <Text>{rowData.total}</Text>
+      <View>
+        <TouchableNativeFeedback
+          onPress={this.handleRowPress}
+          onHighlight={() => highlightRowFunc(sectionID, rowID)}
+          onUnhighlight={() => highlightRowFunc(null, null)}
+          >
+          <View style={styles.row}>
+            <Text>{rowData.groupName}</Text>
+            <Text>{rowData.total}</Text>
+          </View>
+        </TouchableNativeFeedback>
       </View>
     )
   },
