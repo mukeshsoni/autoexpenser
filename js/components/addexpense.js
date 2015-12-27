@@ -14,8 +14,8 @@ var {
 } = React;
 
 var PropTypes = React.PropTypes;
-const BANKS = ['ICICI', 'HDFC'];
-const CATEGORIES = ['Jewellery', 'Grocery'];
+const BANKS = require('../constants/banks');
+const CATEGORIES = require('../constants/expense_categories');
 
 var AddExpense = React.createClass({
   propTypes: {

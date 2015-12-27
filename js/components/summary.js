@@ -13,7 +13,7 @@ var {
 } = React;
 
 var PropTypes = React.PropTypes;
-const timePeriods = ['All Time', 'Last 30 Days', 'Last One Month', 'Last One Year'];
+const timePeriods = require('../constants/timefilteroptions');
 
 var Summary = React.createClass({
   getInitialState: function() {
