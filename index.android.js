@@ -7,7 +7,6 @@
 var React = require('react-native');
 var AddExpense = require('./components/addexpense');
 var Summary = require('./components/summary');
-var Accounts = require('./components/accounts');
 var ScrollableTabView = require('react-native-scrollable-tab-view');
 
 var {
@@ -20,6 +19,12 @@ var {
 } = React;
 
 var SMS = 'Some random expense blah blah';
+var EXPENSES = [
+  {category: 'Jewellery', bank: 'ICICI', expense: 10000},
+  {category: 'Grocery', bank: 'HDFC', expense: 1000},
+  {category: 'Jewellery', bank: 'HDFC', expense: 24500},
+  {category: 'Grocery', bank: 'HDFC', expense: 12390},
+];
 
 var autoexpenser = React.createClass({
   handleActionSelected(actionIndex) {
@@ -50,9 +55,13 @@ var autoexpenser = React.createClass({
         <ScrollableTabView>
           <Summary
             tabLabel='Summary'
+            expenses={EXPENSES}
+            groupBy='category'
             />
-          <Accounts
+          <Summary
             tabLabel='Accounts'
+            expenses={EXPENSES}
+            groupBy='bank'
             />
           <AddExpense
             tabLabel='Add Expense'

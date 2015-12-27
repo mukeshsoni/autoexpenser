@@ -1,6 +1,8 @@
 'use strict';
 
 var React = require('react-native');
+var _ = require('lodash');
+
 var {
   StyleSheet,
   ListView,
@@ -9,10 +11,6 @@ var {
 } = React;
 
 var PropTypes = React.PropTypes;
-var EXPENSES = [
-  {category: 'Jewellery', expense: 10000},
-  {category: 'Grocery', expense: 1000},
-];
 
 var Summary = React.createClass({
   getInitialState: function() {
@@ -20,15 +18,23 @@ var Summary = React.createClass({
       rowHasChanged: (row1, row2) => row1 !== row2
     });
 
+    var groupedExpenses = _.groupBy(this.props.expenses, this.props.groupBy);
+    var expenseData = _.map(groupedExpenses, (val, key) => {
+      return {
+        groupName: key,
+        total: _.sum(val, (item) => item.expense)
+      }
+    });
+
     return {
-      dataSource: ds.cloneWithRows(EXPENSES)
+      dataSource: ds.cloneWithRows(expenseData)
     };
   },
   renderRow(rowData) {
     return (
       <View style={styles.row}>
-        <Text>{rowData.category}</Text>
-        <Text>{rowData.expense}</Text>
+        <Text>{rowData.groupName}</Text>
+        <Text>{rowData.total}</Text>
       </View>
     )
   },
