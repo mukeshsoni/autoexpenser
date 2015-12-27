@@ -4,7 +4,6 @@ var React = require('react-native');
 var Dropdown = require('react-native-dropdown-android');
 
 var {
-  AppRegistry,
   StyleSheet,
   Text,
   TextInput,
@@ -78,25 +77,25 @@ var AddExpense = React.createClass({
         <View style={styles.container}>
           <View style={styles.row}>
           <ToolbarAndroid
-      logo={require('./img/ic_launcher_mcube.png')}
-      title="mcube"
-      style={styles.toolbar}
-      actions={[
-        {
-          title: 'Delete',
-          icon: require('./img/ic_menu_delete.png'),
-          show: 'always',
-          showWithText: true
-        },
-        {
-          title: 'Save',
-          icon: require('./img/ic_action_save_expense.png'),
-          show: 'always',
-          showWithText: true
-        }
-      ]}
-      onActionSelected={this.handleActionSelected} />
-  </View>
+            logo={require('../img/ic_launcher_mcube.png')}
+            title="mcube"
+            style={styles.toolbar}
+            actions={[
+              {
+                title: 'Delete',
+                icon: require('../img/ic_menu_delete.png'),
+                show: 'always',
+                showWithText: true
+              },
+              {
+                title: 'Save',
+                icon: require('../img/ic_action_save_expense.png'),
+                show: 'always',
+                showWithText: true
+              }
+            ]}
+            onActionSelected={this.handleActionSelected} />
+          </View>
             <View style={styles.row}>
                 <Text style={styles.label}>Date</Text>
                 <Text style={{fontSize: 20}}>{this.formatDate(this.state.date)}</Text>

@@ -5,24 +5,60 @@
 'use strict';
 
 var React = require('react-native');
-var AddExpense = require('./addexpense');
+var AddExpense = require('./components/addexpense');
+var Summary = require('./components/summary');
+var Accounts = require('./components/accounts');
+var ScrollableTabView = require('react-native-scrollable-tab-view');
 
 var {
   AppRegistry,
   StyleSheet,
   Text,
   View,
+  ToolbarAndroid,
+  Dimensions,
 } = React;
 
 var SMS = 'Some random expense blah blah';
 
 var autoexpenser = React.createClass({
+  handleActionSelected(actionIndex) {
+    console.log('action index: ', actionIndex);
+  },
   render: function() {
     return (
       <View style={styles.container}>
-        <AddExpense
-          sms={SMS}
-          />
+        <ToolbarAndroid
+          logo={require('./img/ic_launcher_mcube.png')}
+          title="mcube"
+          style={styles.toolbar}
+          actions={[
+            {
+              title: 'Charts',
+              icon: require('./img/ic_menu_charts.png'),
+              show: 'always',
+              showWithText: true
+            },
+            {
+              title: 'New Expense',
+              icon: require('./img/ic_action_add_expense.png'),
+              show: 'always',
+              showWithText: true
+            },
+          ]}
+          onActionSelected={this.handleActionSelected} />
+        <ScrollableTabView>
+          <Summary
+            tabLabel='Summary'
+            />
+          <Accounts
+            tabLabel='Accounts'
+            />
+          <AddExpense
+            tabLabel='Add Expense'
+            sms={SMS}
+            />
+        </ScrollableTabView>
       </View>
     );
   }
@@ -31,9 +67,12 @@ var autoexpenser = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    marginTop: 30,
+  },
+  toolbar: {
+    backgroundColor: '#e9eaed',
+    width: Dimensions.get('window').width - 30,
+    height: 56,
   },
 });
 
