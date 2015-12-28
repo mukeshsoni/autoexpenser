@@ -16,6 +16,7 @@ import com.chymtt.reactnativedropdown.DropdownPackage;
 // Datepicker
 import me.nucleartux.date.ReactDatePackage;
 import android.support.v4.app.FragmentActivity;
+import org.pgsqlite.SQLitePluginPackage;
 
 public class MainActivity extends FragmentActivity implements DefaultHardwareBackBtnHandler {
 
@@ -32,6 +33,7 @@ public class MainActivity extends FragmentActivity implements DefaultHardwareBac
                 .setBundleAssetName("index.android.bundle")
                 .setJSMainModuleName("index.android")
                 .addPackage(new MainReactPackage())
+                .addPackage(new SQLitePluginPackage(this))
                 .addPackage(new DropdownPackage())
                 .addPackage(new ReactDatePackage(this))
                 .setUseDeveloperSupport(BuildConfig.DEBUG)

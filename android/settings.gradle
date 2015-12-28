@@ -3,3 +3,6 @@ rootProject.name = 'autoexpenser'
 include ':ReactNativeDropdownAndroid', ':reactdate', ':app'
 project(':ReactNativeDropdownAndroid').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-dropdown-android/android')
 project(':reactdate').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-date')
+
+include ':react-native-sqlite-storage'
+project(':react-native-sqlite-storage').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sqlite-storage/src/android')
