@@ -128,7 +128,18 @@ function closeDb() {
   SQLite.closeDatabase({name: 'mcube.db'});
 }
 
+function init() {
+	db.transaction((tx) => {
+		tx.executeSql(DATABASE_CREATE_EXPENSE_TABLE, [], (tx, results) => {
+			console.log('created expense table');
+		}, (err) => {
+			console.log('Error creating expense table: ', err.message);
+		});
+	})
+}
+
 module.exports = {
   db,
+	init,
   closeDb
 };

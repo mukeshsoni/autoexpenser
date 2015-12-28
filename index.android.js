@@ -8,6 +8,10 @@ var React = require('react-native');
 var AddExpense = require('./js/components/addexpense');
 var Summary = require('./js/components/summary');
 var ScrollableTabView = require('react-native-scrollable-tab-view');
+var sqlite = require('./js/db/sqlite');
+var expenseDb = require('./js/db/expense');
+
+sqlite.init();
 
 var {
   AppRegistry,
@@ -29,8 +33,11 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
   return false;
 });
 
-function handleAddExpenseAction() {
+function handleAddExpenseAction(actionIndex) {
   console.log('add expense or delete clicked');
+  if(actionIndex === 1) {
+    expenseDb.add();
+  }
 }
 
 function handleActionSelected(actionIndex) {
